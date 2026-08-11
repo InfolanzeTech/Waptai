@@ -20,16 +20,26 @@ const EventPage = () => {
 
   if (!event) return <p className="text-center mt-20 text-xl">Event not found</p>;
 
+  const isFamilyMeet = event.name === "31 Jan 2026 WAPTAI Family Special Meet";
+
   return (
     <div className="bg-gray-50">
       {/* Container */}
       <div className="px-4 sm:px-6 md:px-12 py-5 max-w-full mx-auto">
 
         {/* HERO GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center md:max-h-screen md:py-5">
+        <div
+          className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:py-5 ${
+            isFamilyMeet ? "items-start md:gap-6" : "items-center md:gap-12 md:max-h-screen"
+          }`}
+        >
           
           {/* LEFT TEXT */}
-          <div className="md:col-span-7 flex flex-col justify-center space-y-6 md:space-y-8">
+          <div
+            className={`flex flex-col justify-center space-y-6 md:space-y-8 ${
+              isFamilyMeet ? "md:col-span-5" : "md:col-span-7"
+            }`}
+          >
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-snug drop-shadow-sm">
               {event.name}
             </h1>
@@ -55,8 +65,16 @@ const EventPage = () => {
           </div>
 
           {/* RIGHT IMAGE / VIDEO */}
-          <div className="md:col-span-5 flex justify-center md:mt-0 relative">
-            <div className="w-full max-w-md rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500">
+          <div
+            className={`flex justify-center relative ${
+              isFamilyMeet ? "md:col-span-7 md:justify-end md:pl-4 lg:pl-8" : "md:col-span-5 md:mt-0"
+            }`}
+          >
+            <div
+              className={`rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 ${
+                isFamilyMeet ? "w-full max-w-xl p-2 sm:p-3 bg-white" : "w-full max-w-md"
+              }`}
+            >
               {event.youtubeId ? (
                 <iframe
                   className="w-full h-64 sm:h-80 md:h-96 lg:h-[23rem] rounded-3xl"
@@ -68,7 +86,11 @@ const EventPage = () => {
                 <img
                   src={event.hero}
                   alt={event.name}
-                  className="w-full h-auto sm:h-80 lg:h-[33rem] rounded-3xl transform hover:scale-105 transition-transform duration-500 cursor-pointer"
+                  className={
+                    isFamilyMeet
+                      ? "w-full h-auto object-contain rounded-2xl cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
+                      : "w-full h-auto sm:h-80 lg:h-[33rem] rounded-3xl transform hover:scale-105 transition-transform duration-500 cursor-pointer"
+                  }
                   onClick={() => setHeroOpen(true)}
                 />
               )}
@@ -125,6 +147,42 @@ const EventPage = () => {
               </h3>
             </div>
             <ImageSlider images={event.images} cardStyle="shadow-lg rounded-xl" />
+          </section>
+        )}
+
+        {/* YOUTUBE VIDEOS */}
+        {event.youtubeIds?.length > 0 && (
+          <section className="mt-16">
+            <div className="flex items-center gap-3 mb-5">
+              <svg
+                className="w-6 h-6 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z" />
+              </svg>
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-800">Event Videos</h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+              {event.youtubeIds.map((id, i) => (
+                <div
+                  key={id}
+                  className="bg-white rounded-2xl shadow-md border border-gray-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="relative w-full aspect-video bg-black">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${id}`}
+                      title={`Event Video ${i + 1}`}
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full rounded-2xl"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         )}
 
