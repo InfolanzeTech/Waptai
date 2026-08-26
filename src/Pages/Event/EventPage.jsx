@@ -20,7 +20,7 @@ const EventPage = () => {
 
   if (!event) return <p className="text-center mt-20 text-xl">Event not found</p>;
 
-  const isFamilyMeet = event.name === "31 Jan 2026 WAPTAI Family Special Meet";
+  const isFamilyMeet = event.name === "31 July 2026 WAPTAI Family Special Meet";
 
   return (
     <div className="bg-gray-50">

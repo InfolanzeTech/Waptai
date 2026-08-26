@@ -1,7 +1,7 @@
 
 export const tabs = [
   {
-    name: "31 Jan 2026 WAPTAI Family Special Meet",
+    name: "31 July 2026 WAPTAI Family Special Meet",
     hero: "https://res.cloudinary.com/danaw1eyu/image/upload/v1786452954/YOGI1463_1_cemvxn.jpg",
     images: [
       "https://res.cloudinary.com/danaw1eyu/image/upload/v1786452499/YOGI1389_2_pgs0so.jpg",
